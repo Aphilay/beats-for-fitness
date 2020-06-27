@@ -16,19 +16,6 @@ class Song(db.Model):
         return 'Song  ' + str(self.id)
 
 
-# dummy data
-my_playlist = [
-    {
-        'artist': 'Drake',
-        'song': 'Pain 1993'
-    },
-    {
-        'artist': 'Future',
-        'song': 'Outer Space Bih'
-    }
-]
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -38,29 +25,47 @@ def index():
 def about():
     return render_template('about.html')
 
-
+# GET: retrives the playlist stored in db
+# POST: takes form data in playlist.html and stores in db
 @app.route('/playlist', methods=['GET', 'POST'])
 def playlist():
     if request.method == 'POST':
         song_title = request.form['title']
         artist = request.form['artist']
         bpm = request.form['bpm']
+
         new_song = Song(title=song_title, artist=artist, bpm=bpm)
+
         db.session.add(new_song)
         db.session.commit()
         return redirect('/playlist')
     else:
         all_songs = Song.query.order_by(Song.id).all()
-        return render_template('playlist.html', playlists=all_songs)
+        return render_template('playlist.html', playlist=all_songs)
 
 
-# http methods example
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/playlist/delete/<int:id>')
+def delete(id):
+    song = Song.query.get_or_404(id)
+
+    db.session.delete(song)
+    db.session.commit()
+    return redirect('/playlist')
+
+
+@app.route('/playlist/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    song = Song.query.get_or_404(id)
+
     if request.method == 'POST':
-        return 'POST METHOD'
+        song.title = request.form['title']
+        song.artist = request.form['artist']
+        song.bpm = request.form['bpm']
+        db.session.commit()
+        return redirect('/playlist')
     else:
-        return 'GET METHOD'
+        # keyword post allows edit.html to get access to song obj
+        return render_template('edit.html', song=song)
 
 
 if __name__ == "__main__":
