@@ -4,6 +4,19 @@
 
 <h1>My Playlist</h1>
 
+<hr />
+<h2>Add a new song</h2>
+<form action="/song" method="POST">
+  Song Title: <input type="text" name="title" id="title" />
+  <br />
+  Artist: <input type="text" name="artist" id="artist" />
+  <br />
+  BPM: <input type="text" name="bpm" id="bpm" />
+  <br />
+  <input type="submit" value="Post" />
+</form>
+<hr />
+
 {% for playlist in playlists %}
 <h2>{{playlist.artist}}</h2>
 <p>{{playlist.song}}</p>
