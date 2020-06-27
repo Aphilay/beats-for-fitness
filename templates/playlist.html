@@ -7,24 +7,54 @@
 <hr />
 <h2>Add a new song</h2>
 <form action="/playlist" method="POST">
-  Song Title: <input type="text" name="title" id="title" />
+<label for='title'>Song Title:</label>
+  
+    <input
+      class="form-control"
+      type="text"
+      name="title"
+      id="title"
+      placeholder="Enter song"
+    />
   <br />
-  Artist: <input type="text" name="artist" id="artist" />
-  <br />
-  BPM: <input type="text" name="bpm" id="bpm" />
-  <br />
-  <input type="submit" value="Post" />
-</form>
-<hr />
 
-{% for song in playlist %}
-<h3>Song Title: {{song.title}}</h3>
-<p>Artist: {{song.artist}}</p>
-{% if song.bpm %}
-<p>BPM: {{song.bpm}}</p>
-{% else %}
-<p>BPM: N/A</p>
-{%endif%}
-<a href="/playlist/delete/{{song.id}}">Delete</a>
-<a href="/playlist/edit/{{song.id}}">Edit</a>
-{%endfor%} {% endblock %}
+  <label for='artist'>Artist:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="artist"
+      id="artist"
+      placeholder="Enter artist"
+    />
+  <br />
+
+  <label for='bpm'>BPM:</label>
+    <br />
+      <input
+        class="form-control"
+        type="text"
+        name="bpm"
+        id="bpm"
+        placeholder="Beats per minute"
+      />
+    <br />
+      <input class="btn btn-success" type="submit" value="Add" />
+    <hr />
+
+    {% for song in playlist %}
+    <h5>Song Title: {{song.title}}</h5>
+    <p>Artist: {{song.artist}}</p>
+    {% if song.bpm %}
+    <p>BPM: {{song.bpm}}</p>
+    {% else %}
+    <p>BPM: N/A</p>
+    {%endif%}
+    <a class="btn btn-danger" href="/playlist/delete/{{song.id}}">Delete</a>
+    <a class="btn btn-primary" href="/playlist/edit/{{song.id}}">Edit</a>
+    <br>
+    <hr>
+    <br>
+
+    {%endfor%} {% endblock %}
+  </form>
+</form>
