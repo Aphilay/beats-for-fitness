@@ -2,18 +2,19 @@
 <title>Edit</title>
 {% endblock %} {% block body %}
 
-<h1>Editing Song</h1>
+<h1>Adding a Song</h1>
 
 <hr />
-<h2>Edit</h2>
-<form action="/playlist/edit/{{song.id}}" method="POST">
+<h2>New Song:</h2>
+<form action="/playlist" method="POST">
   <label for="title">Song Title:</label>
+
   <input
     class="form-control"
     type="text"
     name="title"
     id="title"
-    value="{{song.title}}"
+    placeholder="Enter song"
   />
   <br />
 
@@ -23,7 +24,7 @@
     type="text"
     name="artist"
     id="artist"
-    value="{{song.artist}}"
+    placeholder="Enter artist"
   />
   <br />
 
@@ -34,11 +35,10 @@
     type="text"
     name="bpm"
     id="bpm"
-    value="{{song.bpm}}"
+    placeholder="Beats per minute"
   />
   <br />
-  <input class="btn btn-primary" type="submit" value="Save" />
-  <hr />
+  <input class="btn btn-success" type="submit" value="Add" />
 </form>
 <hr />
 {% endblock %}
