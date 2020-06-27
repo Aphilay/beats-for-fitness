@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block head %}
+<title>Edit</title>
+{% endblock %} {% block body %}
+
+<h1>Editing Song</h1>
+
+<hr />
+<h2>Edit</h2>
+<form action="/playlist/edit/{{song.id}}" method="POST">
+  Song Title:
+  <input type="text" name="title" id="title" value="{{song.title}}" />
+  <br />
+  Artist:
+  <input type="text" name="artist" id="artist" value="{{song.artist}}" />
+  <br />
+  BPM: <input type="text" name="bpm" id="bpm" />
+  <br />
+  <input type="submit" value="Save" />
+</form>
+<hr />
+{% endblock %}

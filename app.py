@@ -50,5 +50,20 @@ def delete(id):
     return redirect('/playlist')
 
 
+@app.route('/playlist/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    song = Song.query.get_or_404(id)
+
+    if request.method == 'POST':
+        song.title = request.form['title']
+        song.artist = request.form['artist']
+        song.bpm = request.form['bpm']
+        db.session.commit()
+        return redirect('/playlist')
+    else:
+        # keyword post allows edit.html to get access to song obj
+        return render_template('edit.html', song=song)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
