@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block head %}
+<title>Playlist</title>
+{% endblock %} {% block body %}
+<h1>My Playlist</h1>
+
+{% for playlist in playlists %}
+<h2>{{playlist.artist}}</h2>
+<p>{{playlist.song}}</p>
+{% endfor%} {% endblock %}
