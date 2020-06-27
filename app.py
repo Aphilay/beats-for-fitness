@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
-
+# dummy data
 my_playlist = [
     {
         'artist': 'Drake',
@@ -20,7 +20,7 @@ my_playlist = [
 def index():
     return render_template('index.html')
 
-
+# playlists is the keyword used in the for loop in playlist.html
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -31,7 +31,7 @@ def playlist():
     return render_template('playlist.html', playlists=my_playlist)
 
 
-# http methods
+# http methods example
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
