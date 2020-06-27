@@ -33,7 +33,9 @@ def playlist():
         song_title = request.form['title']
         artist = request.form['artist']
         bpm = request.form['bpm']
+
         new_song = Song(title=song_title, artist=artist, bpm=bpm)
+
         db.session.add(new_song)
         db.session.commit()
         return redirect('/playlist')
@@ -45,6 +47,7 @@ def playlist():
 @app.route('/playlist/delete/<int:id>')
 def delete(id):
     song = Song.query.get_or_404(id)
+
     db.session.delete(song)
     db.session.commit()
     return redirect('/playlist')
