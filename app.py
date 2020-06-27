@@ -16,19 +16,6 @@ class Song(db.Model):
         return 'Song  ' + str(self.id)
 
 
-# dummy data
-my_playlist = [
-    {
-        'artist': 'Drake',
-        'song': 'Pain 1993'
-    },
-    {
-        'artist': 'Future',
-        'song': 'Outer Space Bih'
-    }
-]
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -38,7 +25,8 @@ def index():
 def about():
     return render_template('about.html')
 
-
+# GET: retrives the playlist stored in db
+# POST: takes form data in playlist.html and stores in db
 @app.route('/playlist', methods=['GET', 'POST'])
 def playlist():
     if request.method == 'POST':
@@ -51,16 +39,15 @@ def playlist():
         return redirect('/playlist')
     else:
         all_songs = Song.query.order_by(Song.id).all()
-        return render_template('playlist.html', playlists=all_songs)
+        return render_template('playlist.html', playlist=all_songs)
 
 
-# http methods example
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        return 'POST METHOD'
-    else:
-        return 'GET METHOD'
+@app.route('/playlist/delete/<int:id>')
+def delete(id):
+    song = Song.query.get_or_404(id)
+    db.session.delete(song)
+    db.session.commit()
+    return redirect('/playlist')
 
 
 if __name__ == "__main__":

@@ -17,7 +17,14 @@
 </form>
 <hr />
 
-{% for playlist in playlists %}
-<h2>{{playlist.artist}}</h2>
-<p>{{playlist.song}}</p>
-{% endfor%} {% endblock %}
+{% for song in playlist %}
+<h3>Song Title: {{song.title}}</h3>
+<p>Artist: {{song.artist}}</p>
+{% if song.bpm %}
+<p>BPM: {{song.bpm}}</p>
+{% else %}
+<p>BPM: N/A</p>
+{%endif%}
+<a href="/playlist/delete/{{song.id}}">Delete</a>
+<a href="/playlist/edit/{{song.id}}">Edit</a>
+{%endfor%} {% endblock %}
