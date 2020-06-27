@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -41,7 +41,17 @@ def about():
 
 @app.route('/playlist', methods=['GET', 'POST'])
 def playlist():
-    return render_template('playlist.html', playlists=my_playlist)
+    if request.method == 'POST':
+        song_title = request.form['title']
+        artist = request.form['artist']
+        bpm = request.form['bpm']
+        new_song = Song(title=song_title, artist=artist, bpm=bpm)
+        db.session.add(new_song)
+        db.session.commit()
+        return redirect('/playlist')
+    else:
+        all_songs = Song.query.order_by(Song.id).all()
+        return render_template('playlist.html', playlists=all_songs)
 
 
 # http methods example
