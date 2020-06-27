@@ -68,5 +68,21 @@ def edit(id):
         return render_template('edit.html', song=song)
 
 
+@app.route('/playlist/new', methods=['GET', 'POST'])
+def new_song():
+    if request.method == 'POST':
+        song.title = request.form['title']
+        song.artist = request.form['artist']
+        song.bpm = request.form['bpm']
+
+        new_song = Song(title=song_title, artist=artist, bpm=bpm)
+
+        db.session.add(new_song)
+        db.session.commit()
+        return redirect('/playlist')
+    else:
+        return render_template('new_song.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
