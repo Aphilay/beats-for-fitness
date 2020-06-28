@@ -7,6 +7,6 @@ In its final state, this application will allow the user to view various charact
 ```
 In project root directory:
 
-python3 appy.py
+python3 app.py
 
 ```
