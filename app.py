@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
+import requests
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///playlist.db'
@@ -82,6 +83,34 @@ def new_song():
         return redirect('/playlist')
     else:
         return render_template('new_song.html')
+
+
+# SPOTIFY API TEST
+# DOCUMENTATION: https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/
+@app.route('/spotify', methods=['GET', 'POST'])
+def spotify():
+
+    endpoint_url = "https://api.spotify.com/v1/recommendations?"
+
+    # FILTERS/SEEDS
+    limit = 10
+    market = "US"
+    seed_genres = "hip-hop"
+    target_danceability = 0.9
+
+    query = f'{endpoint_url}limit={limit}&market={market}&seed_genres={seed_genres}&target_danceability={target_danceability}'
+
+    response = requests.get(query, headers={"Content-Type": "application/json",
+                                            "Authorization": "Bearer TOKEN HERE"})
+    json_response = response.json()
+
+    songs = []
+
+    for i in json_response['tracks']:
+        songs.append(i)
+        print(f"\"{i['name']}\" by {i['artists'][0]['name']}")
+
+    return render_template('spotify.html', songs=songs)
 
 
 if __name__ == "__main__":

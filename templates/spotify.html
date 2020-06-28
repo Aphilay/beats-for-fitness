@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block head %}
+<title>Spotify</title>
+{% endblock %} {% block body %}
+
+<br />
+<div>
+  <h1 style="display: inline;">Spotify</h1>
+  <a
+    style="display: inline;"
+    class="btn btn-success float-right"
+    href="/spotify"
+    >Test /spotify</a
+  >
+</div>
+<br />
+
+<hr />
+
+{% for song in songs %}
+<h5>Song Title: {{song.name}}</h5>
+<h5>Artist: {{song.artists[0].name}}</h5>
+<h5>Type: {{song.artists[0].type}}</h5>
+
+<br />
+<hr />
+<br />
+
+{%endfor%} {% endblock %}
